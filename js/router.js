@@ -11,11 +11,33 @@ import {connect} from 'react-redux'
 
 import WelcomePage from './page/WelcomePage'
 import DvaSample from './page/DvaSample'
+import PopularPage from './page/PopularPage'
+import TrendingPage from './page/TrendingPage'
+import FavoritePage from './page/FavoritePage'
+
+const HomePageNavigator = TabNavigator(
+    {
+        PopularPage: {screen: PopularPage},
+        TrendingPage: {screen: TrendingPage},
+        FavoritePage: {screen: FavoritePage}
+    },
+    {
+        tabBarComponent: TabBarBottom,
+        tabBarPosition: 'bottom',
+        swipeEnabled: true,
+        animationEnabled: true,
+        lazyLoad: true,
+        tabBarOptions: {
+            tabBarVisible: true
+        }
+    }
+);
 
 const MainNavigator = StackNavigator(
     {
+        HomePageNavigator: {screen: HomePageNavigator},
         WelcomePage: {screen: WelcomePage},
-        DvaSample: {screen: DvaSample},
+        DvaSample: {screen: DvaSample}
     },
     {
         headerMode: 'float',
@@ -45,7 +67,7 @@ class Router extends PureComponent {
 
     backHandle = () => {
         const currentScreen = getCurrentScreen(this.props.router)
-        if (currentScreen !== 'WelcomePage') {
+        if (currentScreen !== 'HomePageNavigator') {
             this.props.dispatch(NavigationActions.back())
             return true
         }
